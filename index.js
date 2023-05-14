@@ -30,7 +30,7 @@ questionsManager = [
     },
     {
         type: "input",
-        name: "OfficeNumber",
+        name: "officeNumber",
         message: "Office number?",
     }
 
