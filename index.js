@@ -12,7 +12,7 @@ const render = require("./src/page-template.js");
 
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
-questionsManager = [
+questionsEmployee = [
     {
         type: "input",
         name: "name",
@@ -27,19 +27,50 @@ questionsManager = [
         type: "input",
         name: "email",
         message: "Email address?",
-    },
+    }
+
+]
+questionsManager = [
+    ...questionsEmployee,
     {
         type: "input",
         name: "officeNumber",
         message: "Office number?",
+    },
+    {
+        type: "list",
+        name: "nextOption",
+        message: "Office number?",
+        choices:["Add an engineer", "Add an intern", "Finish building the team"]
+    }
+]
+
+questionsEngineer = [
+    ...questionsEmployee,
+    {
+        type: "input",
+        name: "github",
+        message: "GitHub account?"
+    }
+]
+
+questionsIntern = [
+    ...questionsEmployee,
+    {
+        type: "input",
+        name: "school",
+        message: "School?"
     }
 
 ]
+
+
+
 inquirer.prompt(questionsManager).then(answers => {
     manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
     console.log(answers);
     console.log(manager);
-    
+    console.log(answers.nextOption);
     const generateManager = manager => {
         return `
         <div class="card employee-card">
