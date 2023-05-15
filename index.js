@@ -16,7 +16,7 @@ questionsEmployee = [
     {
         type: "input",
         name: "name",
-        message: "What is the manager's name?",
+        message: "What is the employee's name?",
     },
     {
         type: "input",
@@ -40,7 +40,7 @@ questionsManager = [
     {
         type: "list",
         name: "nextOption",
-        message: "Office number?",
+        message: "Would you like to add another team member?",
         choices:["Add an engineer", "Add an intern", "Finish building the team"]
     }
 ]
@@ -51,7 +51,14 @@ questionsEngineer = [
         type: "input",
         name: "github",
         message: "GitHub account?"
+    }, 
+    {
+        type: "list",
+        name: "nextOption",
+        message: "Would you like to add another team member?",
+        choices:["Add an engineer", "Add an intern", "Finish building the team"]
     }
+
 ]
 
 questionsIntern = [
@@ -67,33 +74,26 @@ questionsIntern = [
 
 
 inquirer.prompt(questionsManager).then(answers => {
-    manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
     console.log(answers);
     console.log(manager);
     console.log(answers.nextOption);
-    const generateManager = manager => {
-        return `
-        <div class="card employee-card">
-        <div class="card-header">
-            <h2 class="card-title">${manager.getName()}</h2>
-            <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${manager.getRole()}</h3>
-        </div>
-        <div class="card-body">
-            <ul class="list-group">
-                <li class="list-group-item">ID: ${manager.getId()}</li>
-                <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
-                <li class="list-group-item">Office number: ${manager.getOfficeNumber()}</li>
-            </ul>
-        </div>
-    </div>
-        `;
-    };
+    const team = [];
+    //, , "Finish building the team"
+    if (answers.nextOption === "Add an engineer"){
+        inquirer.prompt(questionsEngineer).then(answers => {
+            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            console.log(engineer);
+        })
+    }else if (answers.nextOption === "Add an intern"){
+        inquirer.prompt(questionsIntern).then(answers => {
+            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+            console.log(intern);
+        })
 
-    const html = generateManager(manager);
-fs.writeFile("./output/team.html", html, (err) => {
-    console.log(err);
-})
-
+    } else {
+        console.log("Team build finished, now render html");
+    }
     });
 
 
