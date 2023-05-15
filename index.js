@@ -67,7 +67,14 @@ questionsIntern = [
         type: "input",
         name: "school",
         message: "School?"
+    },
+    {
+        type: "list",
+        name: "nextOption",
+        message: "Would you like to add another team member?",
+        choices:["Add an engineer", "Add an intern", "Finish building the team"]
     }
+
 
 ]
 
@@ -78,21 +85,30 @@ inquirer.prompt(questionsManager).then(answers => {
     console.log(answers);
     console.log(manager);
     console.log(answers.nextOption);
+    
     const team = [];
-    //, , "Finish building the team"
-    if (answers.nextOption === "Add an engineer"){
-        inquirer.prompt(questionsEngineer).then(answers => {
-            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-            console.log(engineer);
-        })
-    }else if (answers.nextOption === "Add an intern"){
-        inquirer.prompt(questionsIntern).then(answers => {
-            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            console.log(intern);
-        })
+    otherMembers(answers.nextOption);
+    function otherMembers(option){
+        if (option === "Add an engineer"){
+            inquirer.prompt(questionsEngineer).then(answers => {
+                const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+                console.log(engineer);
+                const engineerOption = answers.nextOption;
+                otherMembers(engineerOption);
+            })
+        }else if (option === "Add an intern"){
+            inquirer.prompt(questionsIntern).then(answers => {
+                const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+                console.log(intern);
+                const internOption = answers.nextOption;
+                otherMembers(internOption);
 
-    } else {
-        console.log("Team build finished, now render html");
+            })
+    
+        } else {
+            console.log("Team build finished, now render html");
+        }
+    
     }
     });
 
