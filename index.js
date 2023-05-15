@@ -4,14 +4,14 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const generateTeam = require("./src/page-template.js");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+// const OUTPUT_DIR = path.resolve(__dirname, "output");
+// const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./src/page-template.js");
+// const render = require("./src/page-template.js");
 
-
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
+//general questions for all employees
 questionsEmployee = [
     {
         type: "input",
@@ -30,6 +30,8 @@ questionsEmployee = [
     }
 
 ]
+
+//questions for manager
 questionsManager = [
     ...questionsEmployee,
     {
@@ -45,6 +47,7 @@ questionsManager = [
     }
 ]
 
+//questions for engineer
 questionsEngineer = [
     ...questionsEmployee,
     {
@@ -61,6 +64,7 @@ questionsEngineer = [
 
 ]
 
+//questions for intern
 questionsIntern = [
     ...questionsEmployee,
     {
@@ -74,41 +78,37 @@ questionsIntern = [
         message: "Would you like to add another team member?",
         choices:["Add an engineer", "Add an intern", "Finish building the team"]
     }
-
-
 ]
 
 
 
 inquirer.prompt(questionsManager).then(answers => {
-    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
-    console.log(answers);
-    console.log(manager);
-    console.log(answers.nextOption);
-    
     const team = [];
+    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+    team.push(manager);
     otherMembers(answers.nextOption);
+
     function otherMembers(option){
         if (option === "Add an engineer"){
             inquirer.prompt(questionsEngineer).then(answers => {
                 const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
                 console.log(engineer);
                 const engineerOption = answers.nextOption;
+                team.push(engineer)
                 otherMembers(engineerOption);
             })
         }else if (option === "Add an intern"){
             inquirer.prompt(questionsIntern).then(answers => {
                 const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-                console.log(intern);
                 const internOption = answers.nextOption;
+                team.push(intern);
                 otherMembers(internOption);
-
             })
-    
-        } else {
+            } else {
             console.log("Team build finished, now render html");
-        }
-    
+            const html = generateTeam(team);
+            fs.writeFile("output/team.html", html, (err) => console.log(err))
+                    }
     }
     });
 
