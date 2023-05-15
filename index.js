@@ -80,7 +80,7 @@ questionsIntern = [
     }
 ]
 
-
+console.log("Please enter details about the manager:")
 
 inquirer.prompt(questionsManager).then(answers => {
     const team = [];
