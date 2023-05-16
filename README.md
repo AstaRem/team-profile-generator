@@ -2,9 +2,16 @@
 
 ### Description
 
-This app runs in terminal/command line. User is asked series of questions. 
+Purpose of the app - get the user input in terminal/command prompt and generate HTML file with this information.
+
+User is asked series of questions. 
 
 Based on the answers, html file is generated and each team's member's details are displayed on it's own card.
+
+### Here is the demonstration how the app works
+
+
+This app runs in terminal/command line. 
 
 At the beginning questions about the manager are asked:
 
@@ -31,13 +38,6 @@ New HTML file team.html is generated and saved in output folder:
 Team members details are generated from the input the user provided. 
 
 Open team.html file in browser. Each team member's details are displayed on it's own card:
-
-
-
-
-
-
-
 
 ## Languages, tools, libraries/frameworks used
 
