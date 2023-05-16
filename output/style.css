@@ -1,0 +1,11 @@
+
+.team-area .card {
+    flex-basis: calc(25% - 3rem);
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 991.98px) {
+    .team-area .card {
+        flex-basis: calc(50% - 1rem);
+    }
+}
