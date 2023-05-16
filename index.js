@@ -105,7 +105,7 @@ inquirer.prompt(questionsManager).then(answers => {
                 otherMembers(internOption);
             })
             } else {
-            console.log("Team build finished, now render html");
+            console.log("Team build finished, now open team.html file from output folder");
             const html = generateTeam(team);
             fs.writeFile("output/team.html", html, (err) => console.log(err))
                     }

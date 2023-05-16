@@ -39,6 +39,8 @@ Team members details are generated from the input the user provided.
 
 Open team.html file in browser. Each team member's details are displayed on it's own card:
 
+![team html](./img/renderedHTML.PNG)
+
 ## Languages, tools, libraries/frameworks used
 
 - Javascript
